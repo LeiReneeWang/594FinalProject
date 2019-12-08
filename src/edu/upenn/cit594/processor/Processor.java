@@ -3,6 +3,8 @@ package edu.upenn.cit594.processor;
 import edu.upenn.cit594.data.*;
 import edu.upenn.cit594.datamanagement.PopulationTextReader;
 import edu.upenn.cit594.datamanagement.Reader;
+import edu.upenn.cit594.logging.Logger;
+import edu.upenn.cit594.processor.calculators.PropertyCalculator;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -69,45 +71,11 @@ public class Processor {
     }
 
     public Integer getAvgResidentialMarketValue (Integer zipcode) {
-        int avgResidentialMarketValue = 0;
-        double totalMarketValue = 0.0;
-        int totalResidentialCount = 0;
-
-        LinkedList<Property> propertyList = propertyZipcodeMap.get(zipcode);
-
-        if (propertyList == null) {
-            return 0;
-        }
-
-        for (Property property: propertyList) {
-            totalMarketValue += property.getMarketValue();
-            totalResidentialCount++;
-        }
-
-        avgResidentialMarketValue = (int) totalMarketValue / totalResidentialCount;
-
-        return avgResidentialMarketValue;
+        return new PropertyCalculator().calculateAvgForMarketValue(propertyZipcodeMap, zipcode);
     }
 
     public Integer getAvgResidentialTotalLivableArea (Integer zipcode) {
-        int avgResidentialTotalLivableArea = 0;
-        double totalLivableArea = 0.0;
-        int totalResidentialCount = 0;
-
-        LinkedList<Property> propertyList = propertyZipcodeMap.get(zipcode);
-
-        if (propertyList == null) {
-            return 0;
-        }
-
-        for (Property property: propertyList) {
-            totalLivableArea += property.getTotalLivableArea();
-            totalResidentialCount++;
-        }
-
-        avgResidentialTotalLivableArea = (int) totalLivableArea / totalResidentialCount;
-
-        return avgResidentialTotalLivableArea;
+        return new PropertyCalculator().calculateAvgForTotalLivableArea(propertyZipcodeMap, zipcode);
     }
 
     public Integer getTotalResidentialMarketValuePerCapita (Integer zipcode) {

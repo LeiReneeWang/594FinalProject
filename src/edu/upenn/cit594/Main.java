@@ -17,7 +17,7 @@ public class Main {
 
         // Check whether there are 5 input args
         if (args.length < 5) {
-            System.out.println("Needs 5 args [parkingFormat] [parkingFileName] [propertyFileName] [populationFileName] [logFileName]");
+            System.out.println("Needs 5 args [parkingFileFormat] [parkingFileName] [propertyFileName] [populationFileName] [logFileName]");
             System.exit(0);
         }
 
@@ -30,6 +30,7 @@ public class Main {
 
         // Init the log file name in the singleton Logger
         Logger.init(logFileName);
+        Logger.writeLog(System.currentTimeMillis() + " " + parkingFileFormat + " " + parkingFileName + " " + propertyFileName + " " + populationFileName + " " + logFileName);
 
         // Init and create the Readers
         Reader populationReader = new PopulationTextReader(populationFileName);
@@ -39,8 +40,7 @@ public class Main {
         if (parkingFileFormat.equals("csv")) {
             parkingReader = new ParkingTextReader(parkingFileName);
         } else if ( parkingFileFormat.equals("json") ) {
-//            tweetsReader = new TwitterJsonReader(tweetsFileName);
-            System.exit(0);
+            parkingReader = new ParkingJsonReader(parkingFileName);
         } else {
             System.out.println("The parkingFileFormat is invalid. Only txt or json");
             System.exit(0);

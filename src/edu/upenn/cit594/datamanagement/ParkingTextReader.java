@@ -1,7 +1,7 @@
 package edu.upenn.cit594.datamanagement;
 
 import edu.upenn.cit594.data.Parking;
-import edu.upenn.cit594.data.Population;
+import edu.upenn.cit594.logging.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,10 +17,11 @@ public class ParkingTextReader implements Reader<Map<Integer, LinkedList<Parking
     }
 
     /**
-     * This function reads the raw data in a text file into a LinkedList<Population>
-     * @return LinkedList<Twitter>
+     * This function reads the raw data in a text file into a Map<Integer, LinkedList<Parking>>. The map key is the zipcode
+     * @return Map<Integer, LinkedList<Parking>>
      */
     public Map<Integer, LinkedList<Parking>> read() {
+        Logger.writeLog(System.currentTimeMillis() + " " + filename);
         Map<Integer, LinkedList<Parking>> parkingZipcodeMap = new HashMap<>();
         try {
             Scanner scanner = new Scanner(new File(filename));

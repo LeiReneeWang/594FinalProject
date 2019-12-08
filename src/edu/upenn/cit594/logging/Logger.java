@@ -1,11 +1,8 @@
 package edu.upenn.cit594.logging;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 
 /**
  * @author atu
@@ -32,10 +29,11 @@ public class Logger {
         instance = new Logger(filename);
     }
 
-    public static void writeLogs (List<String> logs) {
-        Path file = Paths.get(filename);
+    public static void writeLog (String log) {
         try {
-            Files.write(file, logs, StandardCharsets.UTF_8);
+            BufferedWriter out = new BufferedWriter(new FileWriter(filename, true));
+            out.write(log + "\n");
+            out.close();
         } catch (IOException e) {
             System.out.println("Unable to write logs into the log file. Check the filename and permission");
             System.exit(0);

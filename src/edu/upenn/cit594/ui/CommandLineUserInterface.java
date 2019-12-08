@@ -24,80 +24,80 @@ public class CommandLineUserInterface {
 
         int zipcode;
 
-        System.out.println("Enter 0-6:");
+        while (true) {
+            System.out.println("Enter 0-6:");
 
-        try {
-            int choice = scanner.nextInt();
+            try {
+                int choice = scanner.nextInt();
+                Logger.writeLog(System.currentTimeMillis() + " " + choice);
 
-            if (choice < 0 || choice > 6) {
-                System.out.println("Your input is not correct. Please enter a number between 0-6");
-                System.exit(0);
-            }
-
-            switch (choice) {
-                case 0:
-                    System.out.println("System exit. Thanks for using");
-                    System.exit(0);
-                    break;
-                case 1:
-                    // Get the total number of the population
-                    Integer totalNumberOfPeople= processor.getTotalPopulation();
-                    System.out.println("The total population is " + totalNumberOfPeople);
-                    break;
-                case 2:
-                    processor.getTotalFinesPerCapita();
-                    break;
-                case 3:
-                    System.out.println("Please enter a zipcode");
-                    zipcode = scanner.nextInt();
-                    processor.getAvgResidentialMarketValue(zipcode);
-                    break;
-                case 4:
-                    System.out.println("Please enter a zipcode");
-                    zipcode = scanner.nextInt();
-                    processor.getAvgResidentialTotalLivableArea(zipcode);
-                    break;
-                case 5:
-                    System.out.println("Please enter a zipcode");
-                    zipcode = scanner.nextInt();
-                    processor.getTotalResidentialMarketValuePerCapita(zipcode);
-                    break;
-                case 6:
-                    break;
-                default:
+                if (choice < 0 || choice > 6) {
                     System.out.println("Your input is not correct. Please enter a number between 0-6");
                     System.exit(0);
+                }
+
+                switch (choice) {
+                    case 0:
+                        scanner.close();
+                        System.out.println("System exit. Thanks for using");
+                        System.exit(0);
+                        break;
+                    case 1:
+                        // Get the total number of the population
+                        Integer totalNumberOfPeople= processor.getTotalPopulation();
+                        System.out.println("The total population is: " + totalNumberOfPeople);
+                        break;
+                    case 2:
+                        Map<Integer, Double> totalFinesPerCapitaMap = processor.getTotalFinesPerCapita();
+                        System.out.println("The total fines per capita is: ");
+                        displaytotalFinesPerCapitaByZipcode(totalFinesPerCapitaMap);
+                        break;
+                    case 3:
+                        System.out.println("Please enter a zipcode");
+                        zipcode = scanner.nextInt();
+                        Logger.writeLog(System.currentTimeMillis() + " " + zipcode);
+                        int avgResidentialMarketValue = processor.getAvgResidentialMarketValue(zipcode);
+                        System.out.println("The average residential market value is: " + avgResidentialMarketValue);
+                        break;
+                    case 4:
+                        System.out.println("Please enter a zipcode");
+                        zipcode = scanner.nextInt();
+                        Logger.writeLog(System.currentTimeMillis() + " " + zipcode);
+                        int avgResidentialTotalLivableArea = processor.getAvgResidentialTotalLivableArea(zipcode);
+                        System.out.println("The average residential total livable area is: " + avgResidentialTotalLivableArea);
+                        break;
+                    case 5:
+                        System.out.println("Please enter a zipcode");
+                        zipcode = scanner.nextInt();
+                        Logger.writeLog(System.currentTimeMillis() + " " + zipcode);
+                        int totalResidentialMarketValuePerCapita = processor.getTotalResidentialMarketValuePerCapita(zipcode);
+                        System.out.println("The total residential market value per capita is: " + totalResidentialMarketValuePerCapita);
+                        break;
+                    case 6:
+                        break;
+                    default:
+                        System.out.println("Your input is not correct. Please enter a number between 0-6");
+                        System.exit(0);
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Your input is not correct. Please enter a number between 0-6");
+                scanner.close();
+                System.exit(0);
             }
-
-//            // Get all the logs from processer and write to the log file
-//            List<String> logs = processor.getAllLogs();
-//            Logger logger = Logger.getInstance();
-//            logger.writeLogs(logs);
-
-            scanner.close();
-        } catch (InputMismatchException e) {
-            System.out.println("Your input is not correct. Please enter a number between 0-6");
-            System.exit(0);
         }
     }
 
-    public static void displayFluCountByState(Map<State, Integer> stateFluCount) {
-
-        // Copy the states in the Map into a list to sort. Then output by state in alphabetical order
-        List<State> statesList = new LinkedList<>();
-        stateFluCount.forEach((state, count) -> {
-            statesList.add(state);
+    public static void displaytotalFinesPerCapitaByZipcode(Map<Integer, Double> totalFinesPerCapitaMap) {
+        // Copy the zipcode in the Map into a list to sort. Then output by state in ascending order
+        List<Integer> zipcodeList = new LinkedList<>();
+        totalFinesPerCapitaMap.forEach((state, count) -> {
+            zipcodeList.add(state);
         });
 
-        statesList.sort(new Comparator<State>()  {
-            @Override
-            public int compare(State o1, State o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
+        Collections.sort(zipcodeList);
 
-        statesList.forEach((state) -> {
-            System.out.println(state.getName() + ": " + stateFluCount.get(state));
+        zipcodeList.forEach((zipcode) -> {
+            System.out.printf(zipcode + " %.4f\n", Math.floor(totalFinesPerCapitaMap.get(zipcode) * 10000) / 10000.0);
         });
     }
 }
