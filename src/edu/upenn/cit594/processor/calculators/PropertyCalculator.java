@@ -15,12 +15,17 @@ import java.util.Map;
 public class PropertyCalculator {
 
     public Integer calculateAvg (Map<Integer, LinkedList<Property>> propertyZipcodeMap, Integer zipcode, PropertyFieldGetter fieldGetter) {
+
+        if (zipcode == null || zipcode == -1 || propertyZipcodeMap == null) {
+            return 0;
+        }
+
         double totalFieldValue = 0.0;
         int totalResidentialCount = 0;
 
         LinkedList<Property> propertyList = propertyZipcodeMap.get(zipcode);
 
-        if (propertyList == null) {
+        if (propertyList == null || propertyList.isEmpty()) {
             return 0;
         }
 

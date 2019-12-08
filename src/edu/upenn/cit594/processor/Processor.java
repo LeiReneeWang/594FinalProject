@@ -79,16 +79,21 @@ public class Processor {
     }
 
     public Integer getTotalResidentialMarketValuePerCapita (Integer zipcode) {
-        int totalResidentialMarketValuePerCapita = 0;
-        double totalMarketValue = 0.0;
-        int totalResidentialCount = populationZipcodeMap.get(zipcode).getNumberOfPeople();
 
-        LinkedList<Property> propertyList = propertyZipcodeMap.get(zipcode);
-
-        if (propertyList == null) {
+        if (zipcode == null || zipcode == -1) {
             return 0;
         }
 
+        int totalResidentialMarketValuePerCapita = 0;
+        double totalMarketValue = 0.0;
+        Population population = populationZipcodeMap.get(zipcode);
+        LinkedList<Property> propertyList = propertyZipcodeMap.get(zipcode);
+
+        if (population == null || population.getNumberOfPeople() == null || propertyList == null) {
+            return 0;
+        }
+
+        int totalResidentialCount = population.getNumberOfPeople();
         for (Property property: propertyList) {
             totalMarketValue += property.getMarketValue();
         }
@@ -97,58 +102,4 @@ public class Processor {
 
         return totalResidentialMarketValuePerCapita;
     }
-
-//    /**
-//     * This function get all the logs need to record in the log file and return them in a list
-//     * @return List<String>
-//     */
-//    public List<String> getAllLogs () {
-//        List<String> logs = new LinkedList<>();
-//
-//        for (Twitter twitter: twitters) {
-//            if (Processor.isFluTweet(twitter.getText())) {
-//                State state = findNearestState(twitter.getLatitude(), twitter.getLongitude());
-//
-//                String log = state.getName() + "    " + twitter.getText();
-//                logs.add(log);
-//            }
-//        }
-//
-//        return logs;
-//    }
-//
-//    private static Boolean isFluTweet (String text) {
-//
-//        String pattern = "#?flu\\W?";
-//
-//        String[] textArr = text.toLowerCase().split(" ");
-//        for (String word: textArr) {
-//            if (Pattern.matches(pattern, word)) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
-//
-//    private State findNearestState (Double latitude, Double longtitue) {
-//        State nearestState = null;
-//        Double shortestDistance = Double.POSITIVE_INFINITY;
-//
-//        // Calculate the distance for each state and find the nearest state
-//        for ( State state: states ) {
-//            Double distance = Processor.calculateEuclideanDistance(latitude, longtitue, state.getLatitude(), state.getLongitude());
-//
-//            if ( distance < shortestDistance) {
-//                nearestState = state;
-//                shortestDistance = distance;
-//            }
-//        }
-//
-//        return nearestState;
-//    }
-//
-//    private static Double calculateEuclideanDistance (Double latitude1, Double longtitue1, Double latitude2, Double longtitue2) {
-//        return Math.sqrt(Math.pow((latitude1 - latitude2), 2) + Math.pow((longtitue1 - longtitue2), 2));
-//    }
 }

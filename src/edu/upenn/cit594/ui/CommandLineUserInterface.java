@@ -4,6 +4,7 @@ import edu.upenn.cit594.data.State;
 import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.Processor;
 
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -21,7 +22,7 @@ public class CommandLineUserInterface {
     }
 
     public void start () {
-
+        String zipcodeRaw;
         int zipcode;
 
         while (true) {
@@ -54,22 +55,46 @@ public class CommandLineUserInterface {
                         break;
                     case 3:
                         System.out.println("Please enter a zipcode");
-                        zipcode = scanner.nextInt();
-                        Logger.writeLog(System.currentTimeMillis() + " " + zipcode);
+
+                        zipcodeRaw = scanner.next();
+                        Logger.writeLog(System.currentTimeMillis() + " " + zipcodeRaw);
+
+                        try {
+                            zipcode = Integer.parseInt(zipcodeRaw);
+                        } catch (NumberFormatException e) {
+                            zipcode = -1;
+                        }
+
                         int avgResidentialMarketValue = processor.getAvgResidentialMarketValue(zipcode);
                         System.out.println("The average residential market value is: " + avgResidentialMarketValue);
                         break;
                     case 4:
                         System.out.println("Please enter a zipcode");
-                        zipcode = scanner.nextInt();
-                        Logger.writeLog(System.currentTimeMillis() + " " + zipcode);
+
+                        zipcodeRaw = scanner.next();
+                        Logger.writeLog(System.currentTimeMillis() + " " + zipcodeRaw);
+
+                        try {
+                            zipcode = Integer.parseInt(zipcodeRaw);
+                        } catch (NumberFormatException e) {
+                            zipcode = -1;
+                        }
+
                         int avgResidentialTotalLivableArea = processor.getAvgResidentialTotalLivableArea(zipcode);
                         System.out.println("The average residential total livable area is: " + avgResidentialTotalLivableArea);
                         break;
                     case 5:
                         System.out.println("Please enter a zipcode");
-                        zipcode = scanner.nextInt();
-                        Logger.writeLog(System.currentTimeMillis() + " " + zipcode);
+
+                        zipcodeRaw = scanner.next();
+                        Logger.writeLog(System.currentTimeMillis() + " " + zipcodeRaw);
+
+                        try {
+                            zipcode = Integer.parseInt(zipcodeRaw);
+                        } catch (NumberFormatException e) {
+                            zipcode = -1;
+                        }
+
                         int totalResidentialMarketValuePerCapita = processor.getTotalResidentialMarketValuePerCapita(zipcode);
                         System.out.println("The total residential market value per capita is: " + totalResidentialMarketValuePerCapita);
                         break;
@@ -80,6 +105,7 @@ public class CommandLineUserInterface {
                         System.exit(0);
                 }
             } catch (InputMismatchException e) {
+                Logger.writeLog(System.currentTimeMillis() + " " + scanner.next());
                 System.out.println("Your input is not correct. Please enter a number between 0-6");
                 scanner.close();
                 System.exit(0);

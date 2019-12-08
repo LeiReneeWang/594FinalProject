@@ -34,12 +34,24 @@ public class PropertyTextReader implements Reader<Map<Integer, LinkedList<Proper
             Integer marketValueIndex = Arrays.asList(titles).indexOf("market_value");
             Integer totalLivableAreaIndex = Arrays.asList(titles).indexOf("total_livable_area");
 
-
             while(scanner.hasNextLine()){
                 Property property = new Property();
-                String[] arr = scanner.nextLine().split(",");
+
+                // remove comma within quotes
+                String nextline = scanner.nextLine();
+                StringBuilder builder = new StringBuilder(nextline);
+                boolean inQuotes = false;
+                for (int currentIndex = 0; currentIndex < builder.length(); currentIndex++) {
+                    char currentChar = builder.charAt(currentIndex);
+                    if (currentChar == '\"') inQuotes = !inQuotes; // toggle state
+                    if (currentChar == ',' && inQuotes) {
+                        builder.setCharAt(currentIndex, ';');
+                    }
+                }
+                String[] arr = builder.toString().split(",", titles.length);
 
                 if (arr.length != titles.length) {
+                    System.out.println(nextline);
                     continue;
                 }
 
@@ -47,15 +59,7 @@ public class PropertyTextReader implements Reader<Map<Integer, LinkedList<Proper
                 String marketValueStr = arr[marketValueIndex];
                 String totalLivableAreaStr = arr[totalLivableAreaIndex];
 
-                if (zipcodeStr.isEmpty() || zipcodeStr.substring(0, 5).length() != 5) {
-                    continue;
-                }
-
-                if (marketValueStr.isEmpty()) {
-                    continue;
-                }
-
-                if (totalLivableAreaStr.isEmpty()) {
+                if (zipcodeStr.isEmpty() || zipcodeStr.substring(0, 5).length() != 5 || marketValueStr.isEmpty() || totalLivableAreaStr.isEmpty()) {
                     continue;
                 }
 
