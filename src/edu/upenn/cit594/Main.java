@@ -40,7 +40,7 @@ public class Main {
         } else if ( parkingFileFormat.equals("json") ) {
             parkingReader = new ParkingJsonReader(parkingFileName);
         } else {
-            System.out.println("The parkingFileFormat is invalid. Only txt or json");
+            System.out.println("The parkingFileFormat is invalid. Only csv or json");
             System.exit(0);
         }
 

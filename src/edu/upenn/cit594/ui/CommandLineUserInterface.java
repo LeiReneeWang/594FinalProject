@@ -30,11 +30,6 @@ public class CommandLineUserInterface {
                 int choice = scanner.nextInt();
                 Logger.writeLog(System.currentTimeMillis() + " " + choice);
 
-                if (choice < 0 || choice > 6) {
-                    System.out.println("Your input is not correct. Please enter a number between 0-6");
-                    System.exit(0);
-                }
-
                 switch (choice) {
                     case 0:
                         scanner.close();
@@ -97,6 +92,7 @@ public class CommandLineUserInterface {
                         System.out.println("The total residential market value per capita is: " + totalResidentialMarketValuePerCapita);
                         break;
                     case 6:
+                        displayMktValueToFineRatio(processor.getTotalFinesPerCapita(), processor);
                         break;
                     default:
                         System.out.println("Your input is not correct. Please enter a number between 0-6");
@@ -111,20 +107,24 @@ public class CommandLineUserInterface {
         }
     }
 
-    public static void displaytotalFinesPerCapitaByZipcode(Map<Integer, Double> totalFinesPerCapitaMap) {
-        // Copy the zipcode in the Map into a list to sort. Then output by state in ascending order
-        List<Integer> zipcodeList = new LinkedList<>();
-        totalFinesPerCapitaMap.forEach((state, count) -> {
-            zipcodeList.add(state);
-        });
-
-        Collections.sort(zipcodeList);
-
-        zipcodeList.forEach((zipcode) -> {
+    private static void displaytotalFinesPerCapitaByZipcode(Map<Integer, Double> totalFinesPerCapitaMap) {
+        for (Integer zipcode : totalFinesPerCapitaMap.keySet()) {
             Double fine = totalFinesPerCapitaMap.get(zipcode);
             if (fine > 0) {
                 System.out.printf(zipcode + " %.4f\n", Math.floor(fine * 10000) / 10000.0);
             }
-        });
+        };
+    }
+
+    private static void displayMktValueToFineRatio(TreeMap<Integer, Double> totalFinesPerCapitaMap, Processor processor) {
+        Set<Integer> zipcodes = totalFinesPerCapitaMap.keySet();
+        for(Integer zipcode: zipcodes) {
+            Double fine = totalFinesPerCapitaMap.get(zipcode);
+            long totalMktValuePerCapita = processor.getTotalResidentialMarketValuePerCapita(zipcode);
+            if (fine > 0) {
+                Double ratio = totalMktValuePerCapita / fine;
+                System.out.printf("The ratio of residental market value to fines for area " + zipcode + " is " + " %.4f\n", Math.floor(ratio * 10000) / 10000.0);
+            }
+        }
     }
 }

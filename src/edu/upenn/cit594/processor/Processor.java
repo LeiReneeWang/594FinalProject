@@ -1,12 +1,14 @@
 package edu.upenn.cit594.processor;
 
-import edu.upenn.cit594.data.*;
+import edu.upenn.cit594.data.Parking;
+import edu.upenn.cit594.data.Population;
+import edu.upenn.cit594.data.Property;
 import edu.upenn.cit594.datamanagement.Reader;
 import edu.upenn.cit594.processor.calculators.PropertyCalculator;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Processor {
 
@@ -42,8 +44,8 @@ public class Processor {
         return totalNumberOfPeople;
     }
 
-    public Map<Integer, Double> getTotalFinesPerCapita () {
-        Map<Integer, Double> totalFinesPerCapitaMap = new HashMap<>();
+    public TreeMap<Integer, Double> getTotalFinesPerCapita () {
+        TreeMap<Integer, Double> totalFinesPerCapitaMap = new TreeMap<>();
 
         for (Integer zipcode:populationZipcodeMap.keySet()) {
             Integer numberOfPeople = populationZipcodeMap.get(zipcode).getNumberOfPeople();
