@@ -100,17 +100,17 @@ public class Processor {
     }
 
     public TreeMap<Integer, Double> getMktValueToFinesPerCapitaRatio () {
-     TreeMap<Integer, Double> mktValueToFinesPerCapitaRatioMap = new TreeMap<>();
-     Set<Integer> zipcodes = getTotalFinesPerCapita().keySet();
-     for(Integer zipcode: zipcodes) {
-         Double fine = getTotalFinesPerCapita().get(zipcode);
-         long totalMktValuePerCapita = getTotalResidentialMarketValuePerCapita(zipcode);
-         Double ratio = totalMktValuePerCapita / fine;
-         if (fine > 0) {
-             mktValueToFinesPerCapitaRatioMap.put(zipcode, ratio);
-         }
-     }
+        TreeMap<Integer, Double> mktValueToFinesPerCapitaRatioMap = new TreeMap<>();
+        Set<Integer> zipcodes = getTotalFinesPerCapita().keySet();
+        for(Integer zipcode: zipcodes) {
+            Double fine = getTotalFinesPerCapita().get(zipcode);
+            long totalMktValuePerCapita = getTotalResidentialMarketValuePerCapita(zipcode);
+            Double ratio = totalMktValuePerCapita / fine;
+            if (fine > 0) {
+                mktValueToFinesPerCapitaRatioMap.put(zipcode, ratio);
+            }
+        }
 
-     return mktValueToFinesPerCapitaRatioMap;
+        return mktValueToFinesPerCapitaRatioMap;
     }
 }
