@@ -28,9 +28,9 @@ public class ParkingTextReader implements Reader<Map<Integer, LinkedList<Parking
 
             while(scanner.hasNextLine()){
                 Parking parking = new Parking();
-                String[] arr = scanner.nextLine().split(",");
+                String[] arr = scanner.nextLine().split(",", 7);
 
-                if (arr.length < 7) {
+                if (arr.length < 7 || arr[6].isEmpty()) {
                     continue;
                 }
 

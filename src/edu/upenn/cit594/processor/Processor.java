@@ -52,7 +52,7 @@ public class Processor {
 
             LinkedList<Parking> parkingList = parkingZipcodeMap.get(zipcode);
 
-            if (parkingList == null) {
+            if (parkingList == null || numberOfPeople == null || numberOfPeople == 0) {
                 continue;
             }
 
