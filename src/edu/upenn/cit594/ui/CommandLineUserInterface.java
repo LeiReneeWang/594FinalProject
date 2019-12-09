@@ -1,10 +1,8 @@
 package edu.upenn.cit594.ui;
 
-import edu.upenn.cit594.data.State;
 import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.Processor;
 
-import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -65,7 +63,7 @@ public class CommandLineUserInterface {
                             zipcode = -1;
                         }
 
-                        int avgResidentialMarketValue = processor.getAvgResidentialMarketValue(zipcode);
+                        long avgResidentialMarketValue = processor.getAvgResidentialMarketValue(zipcode);
                         System.out.println("The average residential market value is: " + avgResidentialMarketValue);
                         break;
                     case 4:
@@ -80,7 +78,7 @@ public class CommandLineUserInterface {
                             zipcode = -1;
                         }
 
-                        int avgResidentialTotalLivableArea = processor.getAvgResidentialTotalLivableArea(zipcode);
+                        long avgResidentialTotalLivableArea = processor.getAvgResidentialTotalLivableArea(zipcode);
                         System.out.println("The average residential total livable area is: " + avgResidentialTotalLivableArea);
                         break;
                     case 5:
@@ -95,7 +93,7 @@ public class CommandLineUserInterface {
                             zipcode = -1;
                         }
 
-                        int totalResidentialMarketValuePerCapita = processor.getTotalResidentialMarketValuePerCapita(zipcode);
+                        long totalResidentialMarketValuePerCapita = processor.getTotalResidentialMarketValuePerCapita(zipcode);
                         System.out.println("The total residential market value per capita is: " + totalResidentialMarketValuePerCapita);
                         break;
                     case 6:
@@ -123,7 +121,10 @@ public class CommandLineUserInterface {
         Collections.sort(zipcodeList);
 
         zipcodeList.forEach((zipcode) -> {
-            System.out.printf(zipcode + " %.4f\n", Math.floor(totalFinesPerCapitaMap.get(zipcode) * 10000) / 10000.0);
+            Double fine = totalFinesPerCapitaMap.get(zipcode);
+            if (fine > 0) {
+                System.out.printf(zipcode + " %.4f\n", Math.floor(fine * 10000) / 10000.0);
+            }
         });
     }
 }

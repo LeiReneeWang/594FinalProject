@@ -45,6 +45,11 @@ public class ParkingJsonReader implements Reader<Map<Integer, LinkedList<Parking
 
                 Integer zipcode = Integer.parseInt((String) parkingJsonObj.get("zip_code"));
                 Integer fine = Math.toIntExact((Long) parkingJsonObj.get("fine"));
+                String state = (String) parkingJsonObj.get("state");
+
+                if (!"PA".equals(state)) {
+                    continue;
+                }
 
                 parking.setZipCode(zipcode);
                 parking.setFine(fine);

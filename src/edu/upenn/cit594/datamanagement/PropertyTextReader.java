@@ -1,6 +1,5 @@
 package edu.upenn.cit594.datamanagement;
 
-import edu.upenn.cit594.data.Population;
 import edu.upenn.cit594.data.Property;
 import edu.upenn.cit594.logging.Logger;
 

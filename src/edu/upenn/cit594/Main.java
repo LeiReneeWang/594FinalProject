@@ -1,11 +1,9 @@
 package edu.upenn.cit594;
-import edu.upenn.cit594.data.Population;
 import edu.upenn.cit594.datamanagement.*;
 import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.Processor;
 import edu.upenn.cit594.ui.CommandLineUserInterface;
 
-import java.util.Map;
 
 /**
  * @author atu

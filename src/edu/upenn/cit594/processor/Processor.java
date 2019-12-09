@@ -1,16 +1,12 @@
 package edu.upenn.cit594.processor;
 
 import edu.upenn.cit594.data.*;
-import edu.upenn.cit594.datamanagement.PopulationTextReader;
 import edu.upenn.cit594.datamanagement.Reader;
-import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.calculators.PropertyCalculator;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 public class Processor {
 
@@ -33,8 +29,8 @@ public class Processor {
     }
 
     /**
-     * This function get the flu count by each state and return a Map
-     * @return Map<State, Integer>
+     * This function get total population
+     * @return Integer
      */
     public Integer getTotalPopulation () {
         Integer totalNumberOfPeople = 0;
@@ -70,21 +66,20 @@ public class Processor {
         return totalFinesPerCapitaMap;
     }
 
-    public Integer getAvgResidentialMarketValue (Integer zipcode) {
+    public long getAvgResidentialMarketValue (Integer zipcode) {
         return new PropertyCalculator().calculateAvgForMarketValue(propertyZipcodeMap, zipcode);
     }
 
-    public Integer getAvgResidentialTotalLivableArea (Integer zipcode) {
+    public long getAvgResidentialTotalLivableArea (Integer zipcode) {
         return new PropertyCalculator().calculateAvgForTotalLivableArea(propertyZipcodeMap, zipcode);
     }
 
-    public Integer getTotalResidentialMarketValuePerCapita (Integer zipcode) {
+    public long getTotalResidentialMarketValuePerCapita (Integer zipcode) {
 
         if (zipcode == null || zipcode == -1) {
             return 0;
         }
 
-        int totalResidentialMarketValuePerCapita = 0;
         double totalMarketValue = 0.0;
         Population population = populationZipcodeMap.get(zipcode);
         LinkedList<Property> propertyList = propertyZipcodeMap.get(zipcode);
@@ -98,8 +93,6 @@ public class Processor {
             totalMarketValue += property.getMarketValue();
         }
 
-        totalResidentialMarketValuePerCapita = (int) totalMarketValue / totalResidentialCount;
-
-        return totalResidentialMarketValuePerCapita;
+        return (long) totalMarketValue / totalResidentialCount;
     }
 }

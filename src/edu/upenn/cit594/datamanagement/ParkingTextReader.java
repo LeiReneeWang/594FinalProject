@@ -36,6 +36,11 @@ public class ParkingTextReader implements Reader<Map<Integer, LinkedList<Parking
 
                 Integer zipcode = Integer.valueOf(arr[6]);
                 Integer fine = Integer.valueOf(arr[1]);
+                String state = arr[4];
+
+                if (!"PA".equals(state)) {
+                    continue;
+                }
 
                 parking.setZipCode(zipcode);
                 parking.setFine(fine);

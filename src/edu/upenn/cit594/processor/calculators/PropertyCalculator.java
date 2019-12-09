@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class PropertyCalculator {
 
-    public Integer calculateAvg (Map<Integer, LinkedList<Property>> propertyZipcodeMap, Integer zipcode, PropertyFieldGetter fieldGetter) {
+    public long calculateAvg (Map<Integer, LinkedList<Property>> propertyZipcodeMap, Integer zipcode, PropertyFieldGetter fieldGetter) {
 
         if (zipcode == null || zipcode == -1 || propertyZipcodeMap == null) {
             return 0;
@@ -34,16 +34,14 @@ public class PropertyCalculator {
             totalResidentialCount++;
         }
 
-        return  (int) totalFieldValue / totalResidentialCount;
+        return (long) totalFieldValue / totalResidentialCount;
     }
 
-    public Integer calculateAvgForMarketValue(Map<Integer, LinkedList<Property>> propertyZipcodeMap, Integer zipcode) {
-
+    public long calculateAvgForMarketValue(Map<Integer, LinkedList<Property>> propertyZipcodeMap, Integer zipcode) {
         return calculateAvg(propertyZipcodeMap, zipcode, new PropertyMarketValueFieldGetter());
     }
 
-    public Integer calculateAvgForTotalLivableArea(Map<Integer, LinkedList<Property>> propertyZipcodeMap, Integer zipcode) {
-
+    public long calculateAvgForTotalLivableArea(Map<Integer, LinkedList<Property>> propertyZipcodeMap, Integer zipcode) {
         return calculateAvg(propertyZipcodeMap, zipcode, new PropertyTotalLivableAreaFieldGetter());
     }
 }

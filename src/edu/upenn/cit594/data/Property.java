@@ -8,7 +8,6 @@ public class Property {
     private Double totalLivableArea;
     private Integer zipCode;
     private Double marketValue;
-    private String buildingCode;
 
     public Double getTotalLivableArea() {
         return totalLivableArea;
@@ -32,13 +31,5 @@ public class Property {
 
     public void setMarketValue(Double marketValue) {
         this.marketValue = marketValue;
-    }
-
-    public String getBuildingCode() {
-        return buildingCode;
-    }
-
-    public void setBuildingCode(String buildingCode) {
-        this.buildingCode = buildingCode;
     }
 }
