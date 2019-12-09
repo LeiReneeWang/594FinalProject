@@ -92,7 +92,7 @@ public class CommandLineUserInterface {
                         System.out.println("The total residential market value per capita is: " + totalResidentialMarketValuePerCapita);
                         break;
                     case 6:
-                        displayMktValueToFineRatio(processor.getTotalFinesPerCapita(), processor);
+                        displayMktValueToFineRatio(processor.getMktValueToFinesPerCapitaRatio(processor.getTotalFinesPerCapita(), processor));
                         break;
                     default:
                         System.out.println("Your input is not correct. Please enter a number between 0-6");
@@ -116,15 +116,11 @@ public class CommandLineUserInterface {
         };
     }
 
-    private static void displayMktValueToFineRatio(TreeMap<Integer, Double> totalFinesPerCapitaMap, Processor processor) {
-        Set<Integer> zipcodes = totalFinesPerCapitaMap.keySet();
+    private static void displayMktValueToFineRatio(TreeMap<Integer, Double> mktVlaueToFinesPerCapitaRatioMap) {
+        System.out.println("The ratio of residential market value per capita to fines per capita for each areas is:");
+        Set<Integer> zipcodes = mktVlaueToFinesPerCapitaRatioMap.keySet();
         for(Integer zipcode: zipcodes) {
-            Double fine = totalFinesPerCapitaMap.get(zipcode);
-            long totalMktValuePerCapita = processor.getTotalResidentialMarketValuePerCapita(zipcode);
-            if (fine > 0) {
-                Double ratio = totalMktValuePerCapita / fine;
-                System.out.printf("The ratio of residental market value to fines for area " + zipcode + " is " + " %.4f\n", Math.floor(ratio * 10000) / 10000.0);
-            }
+            System.out.printf(zipcode + " %.4f\n", Math.floor(mktVlaueToFinesPerCapitaRatioMap.get(zipcode) * 10000) / 10000.0);
         }
     }
 }

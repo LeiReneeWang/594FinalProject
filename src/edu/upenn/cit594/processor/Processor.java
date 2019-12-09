@@ -8,6 +8,7 @@ import edu.upenn.cit594.processor.calculators.PropertyCalculator;
 
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 public class Processor {
@@ -96,5 +97,20 @@ public class Processor {
         }
 
         return (long) totalMarketValue / totalResidentialCount;
+    }
+
+    public TreeMap<Integer, Double> getMktValueToFinesPerCapitaRatio (TreeMap<Integer, Double> FinesPerCapitaMap, Processor processor) {
+     TreeMap<Integer, Double> mktValueToFinesPerCapitaRatioMap = new TreeMap<>();
+     Set<Integer> zipcodes = FinesPerCapitaMap.keySet();
+     for(Integer zipcode: zipcodes) {
+         Double fine = FinesPerCapitaMap.get(zipcode);
+         long totalMktValuePerCapita = processor.getTotalResidentialMarketValuePerCapita(zipcode);
+         Double ratio = totalMktValuePerCapita / fine;
+         if (fine > 0) {
+             mktValueToFinesPerCapitaRatioMap.put(zipcode, ratio);
+         }
+     }
+
+     return mktValueToFinesPerCapitaRatioMap;
     }
 }
