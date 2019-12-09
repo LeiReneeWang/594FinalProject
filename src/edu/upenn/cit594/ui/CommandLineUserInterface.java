@@ -92,7 +92,7 @@ public class CommandLineUserInterface {
                         System.out.println("The total residential market value per capita is: " + totalResidentialMarketValuePerCapita);
                         break;
                     case 6:
-                        displayMktValueToFineRatio(processor.getMktValueToFinesPerCapitaRatio(processor.getTotalFinesPerCapita(), processor));
+                        displayMktValueToFineRatio(processor.getMktValueToFinesPerCapitaRatio());
                         break;
                     default:
                         System.out.println("Your input is not correct. Please enter a number between 0-6");

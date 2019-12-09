@@ -99,12 +99,12 @@ public class Processor {
         return (long) totalMarketValue / totalResidentialCount;
     }
 
-    public TreeMap<Integer, Double> getMktValueToFinesPerCapitaRatio (TreeMap<Integer, Double> FinesPerCapitaMap, Processor processor) {
+    public TreeMap<Integer, Double> getMktValueToFinesPerCapitaRatio () {
      TreeMap<Integer, Double> mktValueToFinesPerCapitaRatioMap = new TreeMap<>();
-     Set<Integer> zipcodes = FinesPerCapitaMap.keySet();
+     Set<Integer> zipcodes = getTotalFinesPerCapita().keySet();
      for(Integer zipcode: zipcodes) {
-         Double fine = FinesPerCapitaMap.get(zipcode);
-         long totalMktValuePerCapita = processor.getTotalResidentialMarketValuePerCapita(zipcode);
+         Double fine = getTotalFinesPerCapita().get(zipcode);
+         long totalMktValuePerCapita = getTotalResidentialMarketValuePerCapita(zipcode);
          Double ratio = totalMktValuePerCapita / fine;
          if (fine > 0) {
              mktValueToFinesPerCapitaRatioMap.put(zipcode, ratio);
